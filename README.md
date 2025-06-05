@@ -4,8 +4,9 @@
 
 ---
 ## Dataset used 
-Data raw and preprocessed from Jaeb Center for Health Research (Tampa, Florida, United States): https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/2
-The preprocessed data has been concatenated into a single CSV file, fusing their text, time series, and tabular data. 
+Data raw and preprocessed from Jaeb Center for Health Research (Tampa, Florida, United States): https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/2  
+The preprocessed data has been concatenated into a single CSV file, fusing their text, time series, and tabular data.  
+
 Filename in the project: 3labelv4Classification.csv
 
 
