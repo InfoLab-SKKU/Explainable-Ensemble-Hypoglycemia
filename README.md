@@ -9,6 +9,7 @@ The preprocessed data has been concatenated into a single CSV file, fusing their
 Filename in the project: 3labelv4Classification.csv
 
 
+
 ## The Architecture of the Proposed Framework
 <div align="center">
   <img src="https://github.com/InfoLab-SKKU/DES4Depression/blob/main/Proposed%20Architecture_page-0001.jpg" alt="Proposed Architecture" width="500"/>
