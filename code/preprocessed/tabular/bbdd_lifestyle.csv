@@ -1,0 +1,202 @@
+PtID,Gender,Ethnicity,Race,EduLevel,AnnualInc,label_encoded
+199,F,NH/NL,W,AD,"$25,000 - $35,000",0
+56,M,NH/NL,W,G/D/GED,"$25,000 - $35,000",1
+201,M,NH/NL,W,AD,"Less than $25,000",0
+107,M,NH/NL,W,G/D/GED,"$50,000 - less than $75,000",1
+47,M,NH/NL,W,G/D/GED,"$25,000 - $35,000",0
+181,M,NH/NL,W,G/D/GED,"$25,000 - $35,000",1
+53,M,NH/NL,W,MD,"$100,000 - less than $200,000",1
+114,F,NH/NL,W,AD,"$50,000 - less than $75,000",0
+95,F,NH/NL,W,C/ND,"$25,000 - $35,000",0
+136,F,NH/NL,W,G/D/GED,"$25,000 - $35,000",0
+81,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+22,F,NH/NL,W,C/ND,"Less than $25,000",1
+19,F,NH/NL,W,BD,"$75,000 - less than $100,000",1
+50,F,NH/NL,W,C/ND,"$35,000 - less than $50,000",0
+90,M,NH/NL,W,BD,"$50,000 - less than $75,000",1
+115,F,NH/NL,W,G/D/GED,"$25,000 - $35,000",1
+77,F,NH/NL,W,BD,"$35,000 - less than $50,000",1
+137,F,NH/NL,W,C/ND,"$25,000 - $35,000",1
+64,F,NH/NL,W,G/D/GED,"$35,000 - less than $50,000",1
+144,F,NH/NL,W,G/D/GED,"$35,000 - less than $50,000",0
+4,F,NH/NL,W,BD,"$50,000 - less than $75,000",1
+5,M,NH/NL,W,MD,"$75,000 - less than $100,000",1
+139,F,NH/NL,W,MD,"$200,000 or more",1
+86,F,NH/NL,W,AD,"Less than $25,000",0
+65,F,NH/NL,W,BD,"$50,000 - less than $75,000",0
+62,M,NH/NL,W,AD,"$50,000 - less than $75,000",1
+148,M,NH/NL,W,C/ND,"$200,000 or more",1
+145,M,NH/NL,W,BD,"$100,000 - less than $200,000",1
+192,M,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+154,M,NH/NL,A,PD,"Less than $25,000",1
+195,F,NH/NL,W,MD,"$100,000 - less than $200,000",0
+79,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+184,F,NH/NL,W,BD,"$35,000 - less than $50,000",0
+165,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+21,M,NH/NL,W,BD,"$35,000 - less than $50,000",0
+175,M,NH/NL,W,BD,"Less than $25,000",0
+173,M,NH/NL,W,BD,"$25,000 - $35,000",1
+26,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+196,M,NH/NL,W,MD,"$25,000 - $35,000",0
+57,M,NH/NL,W,BD,"$35,000 - less than $50,000",1
+108,M,NH/NL,W,MD,"$100,000 - less than $200,000",0
+164,M,NH/NL,W,G/D/GED,"$75,000 - less than $100,000",0
+158,M,NH/NL,W,BD,"Less than $25,000",0
+174,M,NH/NL,W,G/D/GED,"$75,000 - less than $100,000",1
+80,M,NH/NL,W,MD,"$50,000 - less than $75,000",1
+167,M,NH/NL,W,BD,"$50,000 - less than $75,000",1
+97,M,NH/NL,W,DD,"$100,000 - less than $200,000",0
+202,M,NH/NL,W,C/ND,"$25,000 - $35,000",0
+84,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+96,F,NH/NL,W,BD,"$50,000 - less than $75,000",0
+41,M,NH/NL,W,MD,"$200,000 or more",1
+110,F,NH/NL,W,MD,"$75,000 - less than $100,000",0
+123,F,NH/NL,W,DD,"$100,000 - less than $200,000",0
+43,F,NH/NL,W,BD,"$100,000 - less than $200,000",1
+49,F,NH/NL,W,BD,"Less than $25,000",0
+69,M,UNK,W,BD,"$100,000 - less than $200,000",1
+157,F,H/L,UNK,MD,"$50,000 - less than $75,000",0
+132,M,NH/NL,W,PD,"$50,000 - less than $75,000",0
+200,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+88,F,NH/NL,W,BD,"$25,000 - $35,000",0
+29,F,NH/NL,W,MD,"$35,000 - less than $50,000",1
+159,F,NH/NL,W,MD,"$100,000 - less than $200,000",1
+180,F,NH/NL,W,C/ND,"$100,000 - less than $200,000",0
+179,M,NH/NL,W,G/D/GED,"$25,000 - $35,000",0
+116,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+91,M,NH/NL,W,MD,"$75,000 - less than $100,000",1
+153,M,NH/NL,W,C/ND,"Less than $25,000",1
+24,M,NH/NL,W,BD,"$100,000 - less than $200,000",1
+131,M,NH/NL,B/AM,C/ND,"$50,000 - less than $75,000",1
+150,M,NH/NL,W,AD,"$35,000 - less than $50,000",1
+13,F,NH/NL,W,PD,"$100,000 - less than $200,000",0
+7,M,NH/NL,W,MD,"$25,000 - $35,000",1
+140,F,NH/NL,W,MD,"$75,000 - less than $100,000",0
+149,F,NH/NL,W,MD,"$100,000 - less than $200,000",0
+14,F,NH/NL,B/AM,BD,"Less than $25,000",0
+138,F,NH/NL,W,AD,"$50,000 - less than $75,000",0
+113,M,NH/NL,W,G/D/GED,"$50,000 - less than $75,000",0
+124,F,NH/NL,W,MD,"$50,000 - less than $75,000",0
+27,M,NH/NL,W,G/D/GED,"Less than $25,000",0
+191,M,NH/NL,W,BD,"Less than $25,000",0
+129,F,NH/NL,W,DD,"$35,000 - less than $50,000",0
+177,M,NH/NL,W,DD,"$100,000 - less than $200,000",0
+12,F,NH/NL,W,BD,"$100,000 - less than $200,000",0
+141,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+109,M,NH/NL,W,PD,"$200,000 or more",1
+75,F,NH/NL,W,AD,"$50,000 - less than $75,000",0
+52,M,NH/NL,W,MD,"$200,000 or more",0
+63,F,NH/NL,W,DD,"$100,000 - less than $200,000",1
+120,M,NH/NL,W,PD,"$200,000 or more",0
+58,M,NH/NL,W,C/ND,"$25,000 - $35,000",0
+127,M,NH/NL,W,DD,"$200,000 or more",1
+17,M,NH/NL,W,PD,"$100,000 - less than $200,000",0
+94,M,NH/NL,W,DD,"$50,000 - less than $75,000",1
+104,M,NH/NL,W,MD,"$200,000 or more",0
+45,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+35,M,NH/NL,B/AM,C/ND,"$50,000 - less than $75,000",1
+101,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+37,F,NH/NL,W,11G,"Less than $25,000",0
+100,F,NH/NL,W,BD,"$50,000 - less than $75,000",1
+60,F,NH/NL,W,G/D/GED,"$25,000 - $35,000",1
+162,M,NH/NL,W,BD,"$200,000 or more",0
+6,M,NH/NL,W,PD,"$200,000 or more",0
+178,F,NH/NL,W,G/D/GED,"Less than $25,000",1
+119,M,NH/NL,W,BD,"Less than $25,000",1
+155,F,NH/NL,W,BD,"$35,000 - less than $50,000",1
+203,F,NH/NL,W,BD,"$25,000 - $35,000",0
+20,F,NH/NL,W,C/ND,"Less than $25,000",0
+67,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+171,F,NH/NL,W,BD,"$100,000 - less than $200,000",1
+16,M,NH/NL,W,C/ND,"$75,000 - less than $100,000",1
+51,M,NH/NL,W,AD,"$50,000 - less than $75,000",1
+55,M,NH/NL,W,BD,"$35,000 - less than $50,000",0
+189,F,NH/NL,W,AD,"$50,000 - less than $75,000",0
+172,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+142,M,NH/NL,W,BD,"$50,000 - less than $75,000",1
+163,M,NH/NL,W,DD,"$35,000 - less than $50,000",1
+30,M,NH/NL,W,MD,"$35,000 - less than $50,000",0
+25,M,NH/NL,W,C/ND,"$100,000 - less than $200,000",0
+190,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+188,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+36,F,NH/NL,W,G/D/GED,"$50,000 - less than $75,000",0
+33,F,H/L,W,C/ND,"Less than $25,000",1
+48,M,NH/NL,W,C/ND,"$75,000 - less than $100,000",0
+125,M,H/L,W,AD,"$50,000 - less than $75,000",0
+40,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+34,M,NH/NL,W,BD,"$100,000 - less than $200,000",0
+102,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+135,M,NH/NL,W,C/ND,"$75,000 - less than $100,000",0
+11,M,H/L,W,BD,"$25,000 - $35,000",1
+168,F,NH/NL,W,BD,"$50,000 - less than $75,000",1
+1,F,NH/NL,W,AD,"$75,000 - less than $100,000",0
+182,F,NH/NL,W,BD,"$100,000 - less than $200,000",0
+32,F,NH/NL,W,BD,"$50,000 - less than $75,000",0
+105,M,NH/NL,W,MD,"$50,000 - less than $75,000",1
+76,M,NH/NL,W,BD,"$100,000 - less than $200,000",0
+134,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+87,F,NH/NL,W,C/ND,"$25,000 - $35,000",1
+93,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+39,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+98,M,NH/NL,W,BD,"$35,000 - less than $50,000",0
+3,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+156,F,NH/NL,W,BD,"$50,000 - less than $75,000",0
+78,F,NH/NL,W,C/ND,"$75,000 - less than $100,000",0
+185,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+9,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+170,M,NH/NL,W,BD,"$200,000 or more",1
+31,F,NH/NL,W,AD,"$50,000 - less than $75,000",1
+44,F,NH/NL,W,MD,"$35,000 - less than $50,000",1
+18,M,H/L,W,C/ND,"$35,000 - less than $50,000",0
+73,M,NH/NL,W,PD,"$50,000 - less than $75,000",1
+151,F,NH/NL,W,G/D/GED,"$100,000 - less than $200,000",0
+82,M,NH/NL,W,G/D/GED,"$35,000 - less than $50,000",0
+66,M,NH/NL,W,C/ND,"$50,000 - less than $75,000",1
+103,M,NH/NL,W,C/ND,"$25,000 - $35,000",1
+122,M,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+152,F,NH/NL,B/AM,G/D/GED,"$50,000 - less than $75,000",1
+169,M,NH/NL,W,BD,"$100,000 - less than $200,000",1
+146,F,NH/NL,W,BD,"$25,000 - $35,000",1
+186,M,NH/NL,W,MD,"$75,000 - less than $100,000",0
+161,F,NH/NL,W,MD,"$50,000 - less than $75,000",1
+74,M,NH/NL,W,BD,"$50,000 - less than $75,000",0
+143,F,NH/NL,W,BD,"$75,000 - less than $100,000",0
+42,F,NH/NL,W,MD,"$50,000 - less than $75,000",1
+68,M,NH/NL,W,G/D/GED,"$35,000 - less than $50,000",0
+59,F,NH/NL,W,BD,"$100,000 - less than $200,000",0
+61,F,NH/NL,B/AM,C/ND,"$75,000 - less than $100,000",0
+106,F,NH/NL,W,MD,"$100,000 - less than $200,000",0
+118,M,NH/NL,AI/ AN,AD,"$100,000 - less than $200,000",1
+117,F,NH/NL,W,BD,"$35,000 - less than $50,000",0
+38,M,NH/NL,W,BD,"$75,000 - less than $100,000",1
+15,F,NH/NL,W,MD,"$100,000 - less than $200,000",0
+10,F,NH/NL,W,BD,"Less than $25,000",0
+28,F,NH/NL,W,MD,"$50,000 - less than $75,000",0
+92,M,NH/NL,W,BD,"$100,000 - less than $200,000",1
+54,M,NH/NL,B/AM,AD,"$100,000 - less than $200,000",0
+166,F,NH/NL,W,MD,"Less than $25,000",1
+112,M,NH/NL,W,C/ND,"$75,000 - less than $100,000",1
+187,F,NH/NL,W,MD,"$75,000 - less than $100,000",1
+197,F,NH/NL,W,BD,"$50,000 - less than $75,000",1
+130,M,NH/NL,W,MD,"$100,000 - less than $200,000",0
+176,M,NH/NL,W,MD,"$75,000 - less than $100,000",1
+121,M,NH/NL,W,BD,"$200,000 or more",1
+89,F,NH/NL,W,BD,"$50,000 - less than $75,000",1
+83,M,NH/NL,W,7/8G,"Less than $25,000",0
+99,M,NH/NL,W,PD,"$50,000 - less than $75,000",0
+193,F,NH/NL,W,C/ND,"Less than $25,000",1
+128,M,NH/NL,W,9th Grade,"Less than $25,000",1
+71,M,NH/NL,W,AD,"$75,000 - less than $100,000",1
+198,M,NH/NL,W,C/ND,"Less than $25,000",0
+8,F,NH/NL,W,BD,"$35,000 - less than $50,000",1
+2,F,H/L,W,C/ND,"$75,000 - less than $100,000",1
+23,M,NH/NL,W,BD,"$50,000 - less than $75,000",1
+46,F,NH/NL,W,MD,"$100,000 - less than $200,000",0
+133,F,NH/NL,W,C/ND,"$50,000 - less than $75,000",0
+126,F,NH/NL,W,AD,"Less than $25,000",1
+72,F,NH/NL,W,BD,"$75,000 - less than $100,000",1
+70,M,NH/NL,B/AM,ND,"$25,000 - $35,000",0
+147,F,NH/NL,W,G/D/GED,"Less than $25,000",1
+160,M,NH/NL,W,C/ND,"$75,000 - less than $100,000",1
+111,M,NH/NL,W,BD,"$100,000 - less than $200,000",1
+85,F,NH/NL,W,C/ND,"$100,000 - less than $200,000",1
