@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModel
 from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
 from sklearn.impute import SimpleImputer
@@ -16,6 +17,7 @@ import warnings
 from pathlib import Path
 import pickle
 import json
+import math
 
 warnings.filterwarnings('ignore')
 
@@ -500,187 +502,339 @@ class TextEncoder:
         return self.fit(X, y).transform(X)
 
 
-class TimeSeriesTransformerEncoder:
+class TS2VecEncoder:
     """
-    Encodeur Transformer pour données de séries temporelles
+    Encodeur basé sur TS2Vec pour données de séries temporelles CGM
+    TS2Vec: Towards Universal Representation of Time Series
+    Optimisé pour les données de glycémie continue (CGM)
     """
     
-    def __init__(self, output_dim=128, max_seq_length=1000, d_model=64, nhead=8, num_layers=3):
+    def __init__(self, output_dim=128, max_seq_length=2880, d_model=320, n_heads=8, 
+                 n_layers=3, dropout=0.1, mask_ratio=0.15):
         self.output_dim = output_dim
-        self.max_seq_length = max_seq_length
+        self.max_seq_length = max_seq_length  # 2 jours à 1 min = 2880 points
         self.d_model = d_model
-        self.nhead = nhead
-        self.num_layers = num_layers
+        self.n_heads = n_heads
+        self.n_layers = n_layers
+        self.dropout = dropout
+        self.mask_ratio = mask_ratio
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-        # Créer le modèle transformer
-        self.transformer = self._build_transformer()
+        # Modèle TS2Vec
+        self.model = self._build_ts2vec_model()
         self.scaler = StandardScaler()
         self.is_fitted = False
         
-    def _build_transformer(self):
-        """Construit le modèle Transformer"""
-        class TimeSeriesTransformer(nn.Module):
-            def __init__(self, input_dim, d_model, nhead, num_layers, output_dim, max_seq_length):
+        # Paramètres spécifiques CGM
+        self.cgm_stats = {
+            'glucose_mean': None,
+            'glucose_std': None,
+            'normal_range': (70, 180),  # mg/dL
+            'hypo_threshold': 70,
+            'hyper_threshold': 180
+        }
+    
+    def _build_ts2vec_model(self):
+        """Construit le modèle TS2Vec adapté pour CGM"""
+        
+        class SamePadConv(nn.Module):
+            def __init__(self, in_channels, out_channels, kernel_size, dilation=1, groups=1):
                 super().__init__()
-                self.input_projection = nn.Linear(input_dim, d_model)
-                self.positional_encoding = nn.Parameter(torch.randn(max_seq_length, d_model))
-                
-                encoder_layer = nn.TransformerEncoderLayer(
-                    d_model=d_model,
-                    nhead=nhead,
-                    dim_feedforward=d_model * 4,
-                    dropout=0.1,
-                    batch_first=True
+                self.receptive_field = (kernel_size - 1) * dilation + 1
+                padding = self.receptive_field // 2
+                self.conv = nn.Conv1d(
+                    in_channels, out_channels, kernel_size,
+                    padding=padding, dilation=dilation, groups=groups
                 )
-                self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
-                self.output_projection = nn.Linear(d_model, output_dim)
-                self.global_pool = nn.AdaptiveAvgPool1d(1)
+                self.remove = 1 if self.receptive_field % 2 == 0 else 0
                 
-            def forward(self, x, mask=None):
-                # x shape: (batch_size, seq_length, input_dim)
-                seq_length = x.size(1)
+            def forward(self, x):
+                out = self.conv(x)
+                if self.remove > 0:
+                    out = out[:, :, :-self.remove]
+                return out
+        
+        class ConvBlock(nn.Module):
+            def __init__(self, in_channels, out_channels, kernel_size, dilation, final=False):
+                super().__init__()
+                self.conv1 = SamePadConv(in_channels, out_channels, kernel_size, dilation=dilation)
+                self.conv2 = SamePadConv(out_channels, out_channels, kernel_size, dilation=dilation)
+                self.projector = nn.Conv1d(in_channels, out_channels, 1) if in_channels != out_channels else None
+                self.final = final
                 
-                # Projection d'entrée
-                x = self.input_projection(x)
-                
-                # Ajout du positional encoding
-                x = x + self.positional_encoding[:seq_length, :].unsqueeze(0)
-                
-                # Transformer encoder
-                x = self.transformer_encoder(x, src_key_padding_mask=mask)
-                
-                # Global average pooling
-                x = x.transpose(1, 2)  # (batch, d_model, seq_length)
-                x = self.global_pool(x).squeeze(-1)  # (batch, d_model)
-                
-                # Projection finale
-                x = self.output_projection(x)
-                
+            def forward(self, x):
+                residual = x if self.projector is None else self.projector(x)
+                x = F.gelu(x)
+                x = self.conv1(x)
+                x = F.gelu(x)
+                x = self.conv2(x)
+                if not self.final:
+                    x = x + residual
                 return x
         
-        return TimeSeriesTransformer(
-            input_dim=2,  # On assumera 2 features (Hypo, Number)
-            d_model=self.d_model,
-            nhead=self.nhead,
-            num_layers=self.num_layers,
-            output_dim=self.output_dim,
-            max_seq_length=self.max_seq_length
+        class DilatedConvEncoder(nn.Module):
+            def __init__(self, in_channels, channels, kernel_size):
+                super().__init__()
+                self.net = nn.Sequential(*[
+                    ConvBlock(
+                        channels[i-1] if i > 0 else in_channels,
+                        channels[i],
+                        kernel_size=kernel_size,
+                        dilation=2**i,
+                        final=(i == len(channels)-1)
+                    )
+                    for i in range(len(channels))
+                ])
+                
+            def forward(self, x):
+                return self.net(x)
+        
+        class TS2VecModel(nn.Module):
+            def __init__(self, input_dims, output_dims, hidden_dims=64, depth=10, mask_ratio=0.15):
+                super().__init__()
+                self.input_dims = input_dims
+                self.output_dims = output_dims
+                self.hidden_dims = hidden_dims
+                self.mask_ratio = mask_ratio
+                
+                # Input projection pour CGM (glucose + metadata)
+                self.input_fc = nn.Linear(input_dims, hidden_dims)
+                
+                # Dilated convolutional encoder (cœur de TS2Vec)
+                self.feature_extractor = DilatedConvEncoder(
+                    in_channels=hidden_dims,
+                    channels=[hidden_dims] * depth,
+                    kernel_size=3
+                )
+                
+                # Représentation encoder
+                self.repr_dropout = nn.Dropout(0.1)
+                
+                # Projection head pour contrastive learning
+                self.projection_head = nn.Sequential(
+                    nn.Linear(hidden_dims, hidden_dims),
+                    nn.ReLU(),
+                    nn.Linear(hidden_dims, output_dims)
+                )
+                
+            def forward(self, x, mask=None):
+                # x: (batch, seq_len, input_dims)
+                batch_size, seq_len = x.shape[:2]
+                
+                # Input projection
+                x = self.input_fc(x)  # (batch, seq_len, hidden_dims)
+                
+                # Transpose pour conv1d: (batch, hidden_dims, seq_len)
+                x = x.transpose(1, 2)
+                
+                # Feature extraction avec dilated convolutions
+                x = self.feature_extractor(x)  # (batch, hidden_dims, seq_len)
+                
+                # Global average pooling
+                x = F.adaptive_avg_pool1d(x, 1).squeeze(-1)  # (batch, hidden_dims)
+                
+                # Dropout
+                x = self.repr_dropout(x)
+                
+                # Projection finale
+                out = self.projection_head(x)  # (batch, output_dims)
+                
+                return out
+            
+            def encode(self, x, mask=None, encoding_window=None):
+                """Encode une séquence en représentation"""
+                return self.forward(x, mask)
+        
+        return TS2VecModel(
+            input_dims=1,  # Glucose values (peut être étendu)
+            output_dims=self.output_dim,
+            hidden_dims=self.d_model,
+            depth=self.n_layers * 2,  # Plus de couches pour TS2Vec
+            mask_ratio=self.mask_ratio
         ).to(self.device)
     
-    def _process_time_series_data(self, X):
-        """Traite les données de séries temporelles"""
-        processed_data = []
+    def _extract_cgm_features(self, glucose_values):
+        """Extrait les métriques cliniques CGM standards"""
+        glucose_values = glucose_values[~np.isnan(glucose_values)]
+        
+        if len(glucose_values) == 0:
+            return {
+                'mean_glucose': 100.0,
+                'glucose_std': 0.0,
+                'cv': 0.0,
+                'tir_70_180': 0.0,
+                'tbr_70': 0.0,
+                'tar_180': 0.0,
+                'hypo_events': 0,
+                'hyper_events': 0
+            }
+        
+        features = {}
+        
+        # Métriques de base
+        features['mean_glucose'] = np.mean(glucose_values)
+        features['glucose_std'] = np.std(glucose_values)
+        features['cv'] = (features['glucose_std'] / features['mean_glucose']) * 100 if features['mean_glucose'] > 0 else 0
+        
+        # Time in Range (TIR) - métriques cliniques standards
+        features['tir_70_180'] = np.mean((glucose_values >= 70) & (glucose_values <= 180)) * 100
+        features['tbr_70'] = np.mean(glucose_values < 70) * 100
+        features['tar_180'] = np.mean(glucose_values > 180) * 100
+        
+        # Événements hypo/hyperglycémiques
+        # Événement = séquence consécutive de valeurs en dehors de la plage
+        hypo_events = 0
+        hyper_events = 0
+        
+        in_hypo = False
+        in_hyper = False
+        
+        for glucose in glucose_values:
+            if glucose < 70:
+                if not in_hypo:
+                    hypo_events += 1
+                    in_hypo = True
+                in_hyper = False
+            elif glucose > 180:
+                if not in_hyper:
+                    hyper_events += 1
+                    in_hyper = True
+                in_hypo = False
+            else:
+                in_hypo = False
+                in_hyper = False
+        
+        features['hypo_events'] = hypo_events
+        features['hyper_events'] = hyper_events
+        
+        return features
+    
+    def _process_cgm_data(self, X):
+        """Traite les données CGM pour TS2Vec"""
+        processed_sequences = []
+        cgm_metadata = []
         
         for idx, row in X.iterrows():
-            # Collecter toutes les séries temporelles pour ce patient
-            patient_sequences = []
+            # Extraire toutes les valeurs de glucose pour ce patient
+            glucose_values = []
             
             for col in X.columns:
                 if pd.notna(row[col]):
-                    # Essayer de parser comme des valeurs numériques ou des listes
                     try:
                         if isinstance(row[col], str):
-                            # Si c'est une string, essayer de parser
-                            values = [float(x) for x in row[col].split(',') if x.strip()]
+                            # Parse string values (format CSV ou séparés par virgules)
+                            values = [float(x.strip()) for x in row[col].split(',') if x.strip()]
+                            glucose_values.extend(values)
                         elif isinstance(row[col], (list, np.ndarray)):
-                            values = [float(x) for x in row[col]]
+                            glucose_values.extend([float(x) for x in row[col] if not np.isnan(float(x))])
                         else:
-                            values = [float(row[col])]
-                        
-                        if values:
-                            patient_sequences.extend(values)
-                    except (ValueError, AttributeError):
+                            val = float(row[col])
+                            if not np.isnan(val):
+                                glucose_values.append(val)
+                    except (ValueError, AttributeError, TypeError):
                         continue
             
-            # Si pas de données valides, créer une séquence par défaut
-            if not patient_sequences:
-                patient_sequences = [0.0, 0.0]
+            # Nettoyer et valider les valeurs de glucose (plage physiologique)
+            glucose_values = [g for g in glucose_values if 20 <= g <= 600]
             
-            # Créer des paires (simulating Hypo, Number)
-            if len(patient_sequences) % 2 != 0:
-                patient_sequences.append(0.0)
+            # Si pas assez de données, utiliser une séquence de base
+            if len(glucose_values) < 10:
+                glucose_values = [100.0] * 50  # Valeur normale par défaut
             
-            # Reshape en paires
-            sequence_pairs = []
-            for i in range(0, len(patient_sequences), 2):
-                if i + 1 < len(patient_sequences):
-                    sequence_pairs.append([patient_sequences[i], patient_sequences[i+1]])
-                else:
-                    sequence_pairs.append([patient_sequences[i], 0.0])
+            # Limiter à max_seq_length
+            if len(glucose_values) > self.max_seq_length:
+                # Prendre les dernières valeurs (plus récentes)
+                glucose_values = glucose_values[-self.max_seq_length:]
             
-            processed_data.append(sequence_pairs)
+            processed_sequences.append(glucose_values)
+            
+            # Extraire métadonnées CGM
+            metadata = self._extract_cgm_features(np.array(glucose_values))
+            cgm_metadata.append(metadata)
         
-        return processed_data
-    
-    def _prepare_batch(self, sequences_list):
-        """Prépare un batch pour le transformer"""
-        batch_size = len(sequences_list)
-        max_length = min(max(len(seq) for seq in sequences_list), self.max_seq_length)
-        
-        # Créer le tenseur avec padding
-        batch_tensor = torch.zeros(batch_size, max_length, 2)
-        padding_mask = torch.ones(batch_size, max_length, dtype=torch.bool)
-        
-        for i, sequence in enumerate(sequences_list):
-            seq_length = min(len(sequence), max_length)
-            batch_tensor[i, :seq_length, :] = torch.tensor(sequence[:seq_length])
-            padding_mask[i, :seq_length] = False
-        
-        return batch_tensor.to(self.device), padding_mask.to(self.device)
+        return processed_sequences, cgm_metadata
     
     def fit(self, X, y=None):
-        """Fit l'encodeur (pas d'entraînement, juste preprocessing)"""
-        print(f"TimeSeriesEncoder: Fitting sur {len(X)} échantillons")
+        """Fit l'encodeur TS2Vec (preprocessing + statistics)"""
+        print(f"TS2VecEncoder: Fitting sur {len(X)} échantillons CGM")
         
-        # Traiter les données pour obtenir des statistiques
-        processed_data = self._process_time_series_data(X)
+        # Traiter les données CGM
+        sequences, metadata = self._process_cgm_data(X)
         
-        # Collecter toutes les valeurs pour la normalisation
+        # Calculer les statistiques globales pour la normalisation
         all_values = []
-        for sequence in processed_data:
-            for pair in sequence:
-                all_values.extend(pair)
+        for seq in sequences:
+            all_values.extend(seq)
         
         if all_values:
             all_values = np.array(all_values).reshape(-1, 1)
             self.scaler.fit(all_values)
+            
+            # Sauvegarder les stats CGM globales
+            self.cgm_stats['glucose_mean'] = np.mean(all_values)
+            self.cgm_stats['glucose_std'] = np.std(all_values)
+            
+        print(f"  📊 Stats CGM globales:")
+        print(f"      Moyenne glucose: {self.cgm_stats['glucose_mean']:.1f} mg/dL")
+        print(f"      Écart-type: {self.cgm_stats['glucose_std']:.1f} mg/dL")
+        
+        # Calculer des métriques moyennes
+        if metadata:
+            avg_tir = np.mean([m['tir_70_180'] for m in metadata])
+            avg_cv = np.mean([m['cv'] for m in metadata])
+            print(f"      TIR moyen: {avg_tir:.1f}%")
+            print(f"      CV moyen: {avg_cv:.1f}%")
         
         self.is_fitted = True
-        print(f"TimeSeriesEncoder: Fit terminé")
+        print(f"TS2VecEncoder: Fit terminé")
         return self
     
     def transform(self, X):
-        """Transform les données de séries temporelles"""
+        """Transform les données CGM avec TS2Vec"""
         if not self.is_fitted:
             raise ValueError("L'encodeur doit être fitté avant transform")
         
-        print(f"TimeSeriesEncoder: Encodage de {len(X)} séries temporelles")
+        print(f"TS2VecEncoder: Encodage de {len(X)} séries CGM avec TS2Vec")
         
         # Traiter les données
-        processed_data = self._process_time_series_data(X)
+        sequences, metadata = self._process_cgm_data(X)
         
-        # Normaliser les séquences
-        normalized_data = []
-        for sequence in processed_data:
-            if sequence:
-                sequence_array = np.array(sequence)
-                sequence_flat = sequence_array.reshape(-1, 1)
-                sequence_normalized = self.scaler.transform(sequence_flat)
-                sequence_reshaped = sequence_normalized.reshape(-1, 2)
-                normalized_data.append(sequence_reshaped.tolist())
+        # Préparer les batch pour TS2Vec
+        batch_sequences = []
+        
+        for seq in sequences:
+            # Normaliser la séquence
+            seq_array = np.array(seq).reshape(-1, 1)
+            seq_normalized = self.scaler.transform(seq_array).flatten()
+            
+            # Padding si nécessaire
+            if len(seq_normalized) < self.max_seq_length:
+                padded_seq = np.zeros(self.max_seq_length)
+                padded_seq[:len(seq_normalized)] = seq_normalized
             else:
-                normalized_data.append([[0.0, 0.0]])
+                padded_seq = seq_normalized[:self.max_seq_length]
+            
+            batch_sequences.append(padded_seq)
         
-        # Préparer le batch
-        batch_tensor, padding_mask = self._prepare_batch(normalized_data)
+        # Convertir en tensor pour TS2Vec
+        # Shape: (batch_size, seq_length, 1)
+        batch_tensor = torch.FloatTensor(batch_sequences).unsqueeze(-1).to(self.device)
         
-        # Encoder avec le transformer
-        self.transformer.eval()
+        print(f"  🔄 Batch tensor shape: {batch_tensor.shape}")
+        
+        # Encoder avec TS2Vec
+        self.model.eval()
         with torch.no_grad():
-            encodings = self.transformer(batch_tensor, padding_mask)
+            # Utiliser la méthode encode de TS2Vec
+            ts2vec_embeddings = self.model.encode(batch_tensor)
         
-        return encodings.cpu().numpy()
+        # Convertir en numpy
+        embeddings_np = ts2vec_embeddings.cpu().numpy()
+        
+        print(f"  ✅ TS2Vec embeddings shape: {embeddings_np.shape}")
+        print(f"  📈 Encodage TS2Vec terminé: {len(sequences)} séries → {embeddings_np.shape[1]} features")
+        
+        return embeddings_np
     
     def fit_transform(self, X, y=None):
         """Fit et transform en une seule étape"""
@@ -1372,7 +1526,7 @@ def main():
     # Initialiser les encodeurs
     tabular_encoder = TabularEncoder(n_features=112, output_dim=112)
     text_encoder = TextEncoder(output_dim=768)
-    ts_encoder = TimeSeriesTransformerEncoder(output_dim=64)
+    ts_encoder = TS2VecEncoder(output_dim=128, max_seq_length=2880)  # TS2Vec remplace TimeSeriesTransformerEncoder
     
     encoded_results = {}
     
