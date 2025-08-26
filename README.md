@@ -12,7 +12,7 @@ the best early fusion model achieves an Accuracy of 𝟎.𝟕𝟗𝟖𝟑. Stati
 and consistency of these models across multiple metrics. Ultimately, this work highlights the clinical
 relevance of advanced ensemble methods for improving predictive accuracy in high-risk diabetes care,
 and underscores their potential for integration into decision support systems aimed at proactive inter-
-vention and personalized treatment. Dataset : https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/1 </p>
+vention and personalized treatment.</p>
 
 ---
 ## Dataset used 
@@ -37,3 +37,54 @@ Filename in the project: complete_fused_dataset.csv
 
 ### Early Fusion / Late Fusion representation :
 <img width="482" height="449" alt="late early (1)" src="https://github.com/user-attachments/assets/a7063214-3498-4268-bee9-9899963b6df4" />
+
+---
+## Reproducing the results
+
+Follow these steps to reproduce the main experiments reported in this work:
+
+1. **Clone the repository**
+   ~~~bash
+   git clone https://github.com/InfoLab-SKKU/Explainable-Ensemble-Hypoglycemia.git
+   ~~~
+
+2. **Download the dataset**  
+   - Retrieve the dataset from [Figshare](https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/2).  
+   - Insert the **`preprocessed`** folder (from the dataset package) into the project under `/code`.
+
+3. **Set up the environment**  
+   - Create a dedicated Conda or Python virtual environment.  
+   - Install the required dependencies by checking the imports in:
+     - `DetectionLayerEarly.ipynb`
+     - `DetectionLayerLate.ipynb`
+     - `processing_tables.py`  
+
+4. **Generate encoded features**  
+   - Run:
+     ~~~bash
+     python code/processing_tables.py
+     ~~~
+   - During execution, select the fusion mode in the console:  
+     - **1** → simple fusion (Early Fusion)  (the other choices were experimental, just press 1) 
+   - The output CSV files will be saved in `/encoded_features` : We will have the single EF dataset, and the 3 LF embeddings. 
+
+5. **Prepare datasets for training**  
+   - **Early Fusion**: Move the generated file `complete_fused_dataset.csv` from `/encoded_features` into `/code` (unless already present).  
+   - **Late Fusion**: Keep the multiple CSV outputs inside `/encoded_features`.
+
+6. **Run the prediction notebooks**  
+   - Open and execute the notebooks:
+     - `DetectionLayerEarly.ipynb`
+     - `DetectionLayerLate.ipynb`  
+   - Modify cells to add or remove classifiers, adjust hyperparameters, or test different configurations.  
+   - For **Dynamic Ensemble Selection (DES)**, optimized hyperparameters are reported toward the end of the notebooks and can be manually tuned.
+
+---
+
+⚠️ **WARNING — Reproducibility caveat**
+
+Final reported metrics may differ slightly from the published paper for reasons such as:
+
+- Randomness in model initialization, train/test splits, or optimization procedures.  
+- Differences in library versions (scikit-learn, numpy, pandas, joblib, etc.).  
+- Variability introduced by hyperparameter search (randomized search, CV shuffles) or different search budgets.
