@@ -1,6 +1,19 @@
 # Explainable Detection of Severe Hypoglycemia in Type-1 Diabetes Patients with Optimized Static and Dynamic Ensemble Frameworks
 
-<p align="justify"> Type 1 diabetes is a chronic autoimmune disease that affects individuals of all ages and requires lifelong insulin therapy. One of its most serious complications is severe hypoglycemia (SH), a condition where blood glucose levels fall dangerously low, often requiring external assistance. If not properly detected and treated, SH can lead to seizures, unconsciousness, or even death. This study introduces an explainable ensemble-based framework designed to predict the risk of SH among individuals with Type 1 diabetes. We evaluate and compare both static ensemble strategies (SES) and dynamic ensemble selection (DES) methods, focusing on their effectiveness in identifying patients at high risk. Using a multimodal dataset originally introduced in previous work, our approach includes model performance evaluation supported by detailed visual analyses. Furthermore, explainable AI (XAI) techniques—specifically SHAP values—are integrated to provide interpretability and insights into the most influential features driving the model's predictions. Our results demonstrate that both methods, particularly CatBoost/GradientBoosting (SES) and FIRE-KNORA-U/KNORAU, can achieve strong predictive performance, and the use of XAI enables better understanding of clinical and behavioral factors associated with SH. These findings suggest that ensemble learning, combined with explainability, can offer valuable decision-support tools in managing diabetes-related risks, showing satisfying precision, accuracy, and AUCROC scores. </p>
+<p align="justify"> Severe hypoglycemia remains a critical and life-threatening complication for patients with Type 1
+Diabetes, necessitating accurate and early risk prediction. In this study, we propose a comprehensive
+machine learning framework that leverages multimodal patient data—including clinical, psychological, and cognitive features—to predict severe hypoglycemic episodes. We evaluate and compare
+classical machine learning models, static ensemble classifiers, and dynamic ensemble selection (DES)
+techniques, all optimized through feature selection and hyperparameter tuning. Both early fusion and
+late fusion strategies are investigated. Our results indicate that DES and static ensembles achieve
+comparable performance, improving upon the baseline reported in Francisco et al. (2025) with the
+same data source. The best model in the late fusion setting reaches an AUC-ROC of 𝟎.𝟖𝟕𝟕𝟐, while
+the best early fusion model achieves an Accuracy of 𝟎.𝟕𝟗𝟖𝟑. Statistical tests confirm the robustness
+and consistency of these models across multiple metrics. Ultimately, this work highlights the clinical
+relevance of advanced ensemble methods for improving predictive accuracy in high-risk diabetes care,
+and underscores their potential for integration into decision support systems aimed at proactive inter-
+vention and personalized treatment. Dataset : https://figshare.com/articles/dataset/Multimodal-fusion-
+severe-hypo-data/25136942/1 </p>
 
 ---
 ## Dataset used 
