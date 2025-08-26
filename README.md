@@ -1,4 +1,4 @@
-# Explainable Detection of Severe Hypoglycemia in Type-1 Diabetes Patients with Optimized Static and Dynamic Ensemble Frameworks
+# Explainable Detection of Severe Hypoglycemia in Type-1 Diabetes Patients with Multimodal Data, Optimized Static and Dynamic Ensemble Frameworks
 
 <p align="justify"> Severe hypoglycemia remains a critical and life-threatening complication for patients with Type 1
 Diabetes, necessitating accurate and early risk prediction. In this study, we propose a comprehensive
