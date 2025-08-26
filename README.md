@@ -22,23 +22,6 @@ The preprocessed data has been concatenated into a single CSV file, fusing their
 Filename in the project: complete_fused_dataset.csv
 
 ---
-## Roadmap and Frameworks
-### Complete and summarised road map : 
-<img width="570" height="645" alt="ROADMAP" src="https://github.com/user-attachments/assets/144f5a04-b745-4157-bea4-9b3dc8bc606a" />
-
-### Early Fusion (detailed): 
-<img width="239" height="652" alt="frameworkearly" src="https://github.com/user-attachments/assets/7b3ef6e3-9ecd-4e71-9a6d-b4e178a081f5" />
-
-### Late Fusion (detailed): 
-<img width="239" height="652" alt="frameworklate (1)" src="https://github.com/user-attachments/assets/993f8f74-f9cc-4717-a26d-0d878559d367" />
-
-### Data preprocessing (detailed) : 
-<img width="444" height="456" alt="datapreprocessing (2)" src="https://github.com/user-attachments/assets/03a2dd96-786b-4c13-aa44-a93fcf7b2ee9" />
-
-### Early Fusion / Late Fusion representation :
-<img width="482" height="449" alt="late early (1)" src="https://github.com/user-attachments/assets/a7063214-3498-4268-bee9-9899963b6df4" />
-
----
 ## Reproducing the results
 
 Follow these steps to reproduce the main experiments reported in this work:
@@ -88,3 +71,22 @@ Final reported metrics may differ slightly from the published paper for reasons 
 - Randomness in model initialization, train/test splits, or optimization procedures.  
 - Differences in library versions (scikit-learn, numpy, pandas, joblib, etc.).  
 - Variability introduced by hyperparameter search (randomized search, CV shuffles) or different search budgets.
+
+---
+## Roadmap and Frameworks
+### Complete and summarised road map : 
+<img width="570" height="645" alt="ROADMAP" src="https://github.com/user-attachments/assets/144f5a04-b745-4157-bea4-9b3dc8bc606a" />
+
+### Early Fusion (detailed): 
+<img width="239" height="652" alt="frameworkearly" src="https://github.com/user-attachments/assets/7b3ef6e3-9ecd-4e71-9a6d-b4e178a081f5" />
+
+### Late Fusion (detailed): 
+<img width="239" height="652" alt="frameworklate (1)" src="https://github.com/user-attachments/assets/993f8f74-f9cc-4717-a26d-0d878559d367" />
+
+### Data preprocessing (detailed) : 
+<img width="444" height="456" alt="datapreprocessing (2)" src="https://github.com/user-attachments/assets/03a2dd96-786b-4c13-aa44-a93fcf7b2ee9" />
+
+### Early Fusion / Late Fusion representation :
+<img width="482" height="449" alt="late early (1)" src="https://github.com/user-attachments/assets/a7063214-3498-4268-bee9-9899963b6df4" />
+
+
