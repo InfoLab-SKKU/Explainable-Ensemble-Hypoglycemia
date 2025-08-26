@@ -12,8 +12,7 @@ the best early fusion model achieves an Accuracy of 𝟎.𝟕𝟗𝟖𝟑. Stati
 and consistency of these models across multiple metrics. Ultimately, this work highlights the clinical
 relevance of advanced ensemble methods for improving predictive accuracy in high-risk diabetes care,
 and underscores their potential for integration into decision support systems aimed at proactive inter-
-vention and personalized treatment. Dataset : https://figshare.com/articles/dataset/Multimodal-fusion-
-severe-hypo-data/25136942/1 </p>
+vention and personalized treatment. Dataset : https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/1 </p>
 
 ---
 ## Dataset used 
