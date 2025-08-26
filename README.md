@@ -7,7 +7,13 @@
 Data raw and preprocessed from Jaeb Center for Health Research (Tampa, Florida, United States): https://figshare.com/articles/dataset/Multimodal-fusion-severe-hypo-data/25136942/2  
 The preprocessed data has been concatenated into a single CSV file, fusing their text, time series, and tabular data.  
 
-Filename in the project: 3labelv4Classification.csv
+Filename in the project: complete_fused_dataset.csv
 
+---
+## Roadmap and Frameworks
 
-
+<img width="814" height="921" alt="ROADMAP" src="https://github.com/user-attachments/assets/144f5a04-b745-4157-bea4-9b3dc8bc606a" />
+<img width="341" height="931" alt="frameworkearly" src="https://github.com/user-attachments/assets/7b3ef6e3-9ecd-4e71-9a6d-b4e178a081f5" />
+<img width="689" height="1121" alt="frameworklate (1)" src="https://github.com/user-attachments/assets/993f8f74-f9cc-4717-a26d-0d878559d367" />
+<img width="634" height="652" alt="datapreprocessing (2)" src="https://github.com/user-attachments/assets/03a2dd96-786b-4c13-aa44-a93fcf7b2ee9" />
+<img width="689" height="641" alt="late early (1)" src="https://github.com/user-attachments/assets/a7063214-3498-4268-bee9-9899963b6df4" />
