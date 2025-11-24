@@ -31,6 +31,7 @@ class FeatureSelectionNN(nn.Module):
         self.output_dim = output_dim
         
         # Construire les couches
+        #  Constructs model layers
         layers = []
         prev_dim = input_dim
         
