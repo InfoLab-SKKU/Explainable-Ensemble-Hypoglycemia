@@ -4,7 +4,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           MAIN PIPELINE EXECUTION                          │
+│                           MAIN PIPELINE EXECUTION                           │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 1. INITIALIZATION & SETUP
@@ -16,7 +16,7 @@
    └── Load data by type
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              PHASE 1: DATA LOADING                         │
+│                              PHASE 1: DATA LOADING                          │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 2. DATA LOADING (load_data_by_type function)
@@ -40,7 +40,7 @@
        └── Result: roster_data (PtID + BCaseControlStatus labels)
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           PHASE 2: INITIAL ENCODING                        │
+│                           PHASE 2: INITIAL ENCODING                         │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 3. TABULAR DATA ENCODING (if tabular_data exists)
@@ -99,7 +99,7 @@
    └── Result: ts_embeddings (patients × 64 features)
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PHASE 3: NEURAL FEATURE SELECTION                       │
+│                    PHASE 3: NEURAL FEATURE SELECTION                        │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 6. USER FUSION METHOD SELECTION
@@ -135,7 +135,7 @@
        └── Save: "encoded_features/timeseries_reduced.csv"
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                            PHASE 4: FUSION                                 │
+│                            PHASE 4: FUSION                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 8. FUSION EXECUTION (based on user choice)
@@ -183,7 +183,7 @@
       └── Save: "encoded_features/fused_multimodal_dataset.csv"
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                          PHASE 5: FINAL OUTPUT                             │
+│                          PHASE 5: FINAL OUTPUT                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 9. FINAL PROCESSING & SAVING
@@ -231,7 +231,7 @@ Raw Data (3 modalities)
 EXECUTION ENTRY POINT: 
 - Script starts with `if __name__ == "__main__": main()`
 - Creates output directory
-- Executes complete pipeline sequentially
+- Executes the complete pipeline sequentially
 ```
 
 ## Key Execution Characteristics:
@@ -241,7 +241,7 @@ EXECUTION ENTRY POINT:
 3. **User Interaction**: Fusion method selection happens mid-pipeline
 4. **Error Handling**: Graceful handling of missing modalities
 5. **Incremental Saving**: Results saved at each major step
-6. **Memory Management**: Models moved to appropriate device (GPU/CPU)
+6. **Memory Management**: Models moved to the appropriate device (GPU/CPU)
 
 ## Critical Dependencies:
 - PyTorch + CUDA (for neural networks)
