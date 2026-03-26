@@ -1,7 +1,7 @@
 # Explainable Detection of Severe Hypoglycemia in Type-1 Diabetes Patients with Multimodal Data, Optimized Static and Dynamic Ensemble Frameworks
 
 <p align="justify"> Severe hypoglycemia remains a critical and life-threatening complication for patients with Type 1
-Diabetes, necessitating accurate and early risk prediction. In this study, we propose a comprehensive
+Diabetes necessitates accurate and early risk prediction. In this study, we propose a comprehensive
 machine learning framework that leverages multimodal patient data—including clinical, psychological, and cognitive features—to predict severe hypoglycemic episodes. We evaluate and compare
 classical machine learning models, static ensemble classifiers, and dynamic ensemble selection (DES)
 techniques, all optimized through feature selection and hyperparameter tuning. Both early fusion and
