@@ -1,4 +1,4 @@
-name: des4clem
+name: des4hypo
 channels:
   - conda-forge
   - defaults
