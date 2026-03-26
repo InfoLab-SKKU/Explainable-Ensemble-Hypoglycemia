@@ -1,5 +1,3 @@
-# encoded_features
-
 This folder contains the **precomputed encoded feature representations** used in the paper:
 
 **“Explainable Detection of Severe Hypoglycemia in Type-1 Diabetes Patients with Multimodal Data, Optimized Static and Dynamic Ensemble Frameworks.”**
