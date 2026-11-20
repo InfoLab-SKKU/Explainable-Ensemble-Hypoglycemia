@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\begin{axis}[width=12cm, height=8cm, xmin=0, xmax=1, ymin=0, ymax=1.02, grid=major, xlabel={False Positive Rate}, ylabel={True Positive Rate}, legend pos=south east, legend style={font=\small, fill opacity=0.9}, label style={font=\small}, tick label style={font=\small}]
+\addplot[sty1, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.282) (0.10,0.597) (0.15,0.660) (0.20,0.770) (0.25,0.813) (0.30,0.861) (0.35,0.875) (0.40,0.897) (0.45,0.907) (0.50,0.923) (0.55,0.930) (0.60,0.940) (0.65,0.943) (0.70,0.957) (0.75,0.960) (0.80,0.977) (0.85,0.977) (0.90,0.980) (0.95,0.981) (1.00,1.000)};
+\addlegendentry{KNORAE / FIRE-KNORA-E (AUC = 0.838)}
+\addplot[sty2, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.458) (0.10,0.629) (0.15,0.684) (0.20,0.795) (0.25,0.827) (0.30,0.862) (0.35,0.889) (0.40,0.916) (0.45,0.920) (0.50,0.937) (0.55,0.947) (0.60,0.960) (0.65,0.960) (0.70,0.977) (0.75,0.980) (0.80,0.993) (0.85,0.997) (0.90,0.997) (0.95,1.000) (1.00,1.000)};
+\addlegendentry{DESP / FIRE-DESP (AUC = 0.868)}
+\addplot[sty3, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.084) (0.10,0.347) (0.15,0.509) (0.20,0.733) (0.25,0.787) (0.30,0.843) (0.35,0.853) (0.40,0.860) (0.45,0.867) (0.50,0.887) (0.55,0.890) (0.60,0.900) (0.65,0.907) (0.70,0.923) (0.75,0.927) (0.80,0.927) (0.85,0.931) (0.90,0.943) (0.95,0.965) (1.00,1.000)};
+\addlegendentry{FIRE-DESKNN (AUC = 0.775)}
+\addplot[gray, dashed, thick, forget plot] coordinates {(0,0) (1,1)};
+\end{axis}
+\end{tikzpicture}

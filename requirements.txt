@@ -1,0 +1,20 @@
+# Versions used to produce the results of the paper (Python 3.13, CPU only).
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+scikit-learn==1.9.1
+deslib==0.3.7
+xgboost==3.4.1
+catboost==1.2.10
+imbalanced-learn==0.14.2
+torch==2.15.0
+scikit-optimize==0.10.2
+joblib==1.6.0
+matplotlib==3.11.2
+seaborn==0.13.2
+shap==0.54.1
+scikit-posthocs==0.18.0
+optuna==5.1.0
+ipython==9.18.1
+# Only needed to regenerate the encoded features from the raw data (preprocessing/processing_tables.py):
+# transformers

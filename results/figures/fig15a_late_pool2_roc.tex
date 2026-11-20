@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\begin{axis}[width=12cm, height=8cm, xmin=0, xmax=1, ymin=0, ymax=1.02, grid=major, xlabel={False Positive Rate}, ylabel={True Positive Rate}, legend pos=south east, legend style={font=\small, fill opacity=0.9}, label style={font=\small}, tick label style={font=\small}]
+\addplot[sty1, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.523) (0.10,0.717) (0.15,0.757) (0.20,0.817) (0.25,0.850) (0.30,0.883) (0.35,0.897) (0.40,0.930) (0.45,0.943) (0.50,0.960) (0.55,0.960) (0.60,0.967) (0.65,0.973) (0.70,0.973) (0.75,0.977) (0.80,0.987) (0.85,0.990) (0.90,0.997) (0.95,0.997) (1.00,1.000)};
+\addlegendentry{FIRE-DESP (AUC = 0.882)}
+\addplot[sty2, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.523) (0.10,0.717) (0.15,0.753) (0.20,0.820) (0.25,0.850) (0.30,0.887) (0.35,0.897) (0.40,0.930) (0.45,0.943) (0.50,0.960) (0.55,0.960) (0.60,0.967) (0.65,0.973) (0.70,0.973) (0.75,0.977) (0.80,0.987) (0.85,0.990) (0.90,0.997) (0.95,0.997) (1.00,1.000)};
+\addlegendentry{DESP (AUC = 0.882)}
+\addplot[sty3, thick, mark size=1.3pt, mark repeat=2] coordinates {(0.00,0.000) (0.05,0.300) (0.10,0.480) (0.15,0.563) (0.20,0.763) (0.25,0.817) (0.30,0.877) (0.35,0.903) (0.40,0.910) (0.45,0.917) (0.50,0.923) (0.55,0.927) (0.60,0.930) (0.65,0.943) (0.70,0.943) (0.75,0.943) (0.80,0.950) (0.85,0.957) (0.90,0.963) (0.95,0.973) (1.00,1.000)};
+\addlegendentry{DESMI / DESKNN / FIRE-DESKNN (AUC = 0.821)}
+\addplot[gray, dashed, thick, forget plot] coordinates {(0,0) (1,1)};
+\end{axis}
+\end{tikzpicture}

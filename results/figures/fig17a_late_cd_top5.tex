@@ -1,0 +1,18 @@
+\begin{tikzpicture}[font=\normalsize]
+\draw[thick] (1.000,0) -- (11.000,0);
+\draw (1.000,0) -- (1.000,0.15) node[above] {1};
+\draw (3.500,0) -- (3.500,0.15) node[above] {2};
+\draw (6.000,0) -- (6.000,0.15) node[above] {3};
+\draw (8.500,0) -- (8.500,0.15) node[above] {4};
+\draw (11.000,0) -- (11.000,0.15) node[above] {5};
+\draw[very thick] (1.000,0.9) -- (5.822,0.9);
+\node[above] at (3.411,0.9) {CD = 1.929};
+\draw (2.250,0) |- (0.6,-0.450) node[left] {CB (Static) (1.50)};
+\draw (6.500,0) |- (0.6,-0.870) node[left] {DESP (DES) (3.20)};
+\draw (6.500,0) |- (0.6,-1.290) node[left] {FIRE-DESP (DES) (3.20)};
+\draw (7.000,0) |- (11.4,-0.870) node[right] {RF (Static) (3.40)};
+\draw (7.750,0) |- (11.4,-0.450) node[right] {XGB (Static) (3.70)};
+\draw[line width=2.5pt] (2.170,-0.180) -- (7.080,-0.180);
+\draw[line width=2.5pt] (6.420,-0.300) -- (7.830,-0.300);
+\node[above] at (6.000,1.35) {Friedman (AUC-ROC): $\chi^2$ = 12.417, $p = 0.015$};
+\end{tikzpicture}

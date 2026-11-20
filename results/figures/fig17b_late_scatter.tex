@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\begin{axis}[width=12cm, height=8cm, grid=major, xlabel={Accuracy}, ylabel={AUC-ROC}, legend pos=north west, legend style={font=\small}, nodes near coords, point meta=explicit symbolic, every node near coord/.append style={font=\scriptsize, anchor=west}]
+\addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(0.7983,0.8820) [FIRE-DESP/DESP] (0.7933,0.8210) [DESMI/DESKNN/FIRE-DESKNN]};
+\addlegendentry{DES (Pool 2)}
+\addplot[only marks, mark=square, mark size=2.5pt, black] coordinates {(0.7850,0.8830) [RF] (0.8100,0.8600) [XGB] (0.7833,0.8300) [GB] (0.7533,0.8460) [AB] (0.8150,0.9130) [CB]};
+\addlegendentry{Static ensembles}
+\addplot[only marks, mark=triangle, mark size=2.8pt, black] coordinates {(0.7250,0.8090) [DT] (0.7700,0.8780) [LR] (0.7333,0.7900) [NB] (0.7117,0.7610) [KN] (0.7500,0.7790) [MLP] (0.7883,0.8840) [SVC]};
+\addlegendentry{Classical}
+\end{axis}
+\end{tikzpicture}

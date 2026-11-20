@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+cache/
+catboost_info/
+.ipynb_checkpoints/
+results/figures/*.aux
+results/figures/*.log
+data/preprocessed/
